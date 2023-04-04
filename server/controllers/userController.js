@@ -120,7 +120,47 @@ const createResetSession = asyncHandler(async (req, res) => {
   res.json("createResetSession");
 });
 const resetPassword = asyncHandler(async (req, res) => {
-  res.json("resetPassword");
+  try {
+    const oldpassword = await req.body.oldpassword;
+    const newpassword = await req.body.newpassword;
+    const hashpassword = await bcrypt.hash(newpassword, 10);
+    const newUserData = {
+      password: hashpassword,
+    };
+    console.log("1");
+    if (!newpassword && !oldpassword) {
+      res.status(400);
+      throw new Error("Please enter the old password and the new password");
+    }
+    console.log("2");
+
+    const userid = await req.user.userid;
+    const user = await User.findById(userid).select("+password");
+    const comparepassword = await bcrypt.compare(oldpassword, user.password);
+    console.log("3");
+
+    if (!comparepassword) {
+      res.status(404);
+      throw new Error("Incorrect Old Password");
+    }
+    console.log("4");
+
+    const dbuser = await User.findByIdAndUpdate(userid, newUserData, {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    });
+    console.log("5");
+
+    res.status(200).json({
+      success: true,
+      message: "The password has been updated",
+      dbuser,
+    });
+  } catch (error) {
+    res.status(400);
+    throw new Error(error.message);
+  }
 });
 
 module.exports = {
