@@ -90,7 +90,25 @@ const getUser = asyncHandler(async (req, res) => {
   });
 });
 const UpdateUser = asyncHandler(async (req, res) => {
-  res.json("UpdateUser");
+  const newUserData = {
+    username: req.body.username,
+    email: req.body.email,
+  };
+  if (!newUserData.username || !newUserData.email) {
+    res.status(400);
+    throw new Error("Please enter username and email ");
+  }
+  const userid = await req.user.userid;
+  const dbuser = await User.findByIdAndUpdate(userid, newUserData, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
+  res.status(200).json({
+    success: true,
+    message: "The data has been updated",
+    dbuser,
+  });
 });
 const generateOTP = asyncHandler(async (req, res) => {
   res.json("generateOTP");

@@ -22,6 +22,6 @@ router.route("/login").post(login);
 router.route("/user/:username").get(verify, getUser);
 router.route("/verifyOTP").get(verifyOTP);
 router.route("/createResetSession").get(createResetSession);
-router.route("/updateuser").put(UpdateUser);
+router.route("/updateuser").put(verify, UpdateUser);
 router.route("/resetPassword").put(resetPassword);
 module.exports = router;
