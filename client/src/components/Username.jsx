@@ -28,11 +28,18 @@ const Username = () => {
         </div>
         <div>
           <input
+            {...formik.getFieldProps("password")}
+            type="password"
+            placeholder="Password"
+          />
+          <input
             {...formik.getFieldProps("username")}
             type="text"
             placeholder="Username"
           />
-          <button type="submit">Lets Go</button>
+          <button type="submit">
+            <Link to="/profile">Lets Go</Link>{" "}
+          </button>
         </div>
         <div>
           <span>
