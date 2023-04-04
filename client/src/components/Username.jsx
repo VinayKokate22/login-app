@@ -36,7 +36,7 @@ const Username = () => {
         </div>
         <div>
           <span>
-            Not a member <Link to="/register">Register now</Link>{" "}
+            Not a member <Link to="/register">Register now</Link>
           </span>
         </div>
       </form>

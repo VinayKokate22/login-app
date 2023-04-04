@@ -1,13 +1,14 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/home/home";
-import Register from "./pages/register/Register";
+
 import Password from "./components/Password";
 import Username from "./components/Username";
 import Profile from "./components/Profile";
 import Recovery from "./components/Recovery";
 import Reset from "./components/Reset";
 import PageNotFound from "./components/PageNotFound";
+import Register from "./components/Register";
 
 function App() {
   return (
